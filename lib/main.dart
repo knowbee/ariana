@@ -1,4 +1,5 @@
 import 'package:ariana/widgets/breaking_news.dart';
+import 'package:ariana/widgets/categories.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,22 +33,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                "Breaking news",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Breaking news",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                ),
               ),
-            ),
-            SizedBox(
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
-                child: const BreakingNews())
-          ],
+                child: const BreakingNews(),
+              ),
+              const SizedBox(height: 24),
+              const Categories(),
+            ],
+          ),
         ),
       ),
     );
