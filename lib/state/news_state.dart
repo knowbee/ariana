@@ -49,7 +49,10 @@ class NewsState {
   }
 
   factory NewsState.success(
-      List<News> news, int page, int totalPage, int count) {
+      {required List<News> news,
+      required int page,
+      required int totalPage,
+      required int count}) {
     return NewsState(
       news: news,
       isLoading: false,
