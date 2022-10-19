@@ -1,5 +1,6 @@
 import 'package:ariana/model/news.dart';
 import 'package:ariana/widgets/breaking_news_item.dart';
+import 'package:ariana/widgets/news_details_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +14,7 @@ class NewsDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: const NewsDetailsBottomBar(),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(

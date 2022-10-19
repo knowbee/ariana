@@ -1,4 +1,4 @@
-import 'package:ariana/main.dart';
+import 'package:ariana/screens/home.dart';
 import 'package:ariana/screens/live_streaming.dart';
 import 'package:flutter/material.dart';
 
@@ -8,13 +8,13 @@ extension AppLangExtension on AppTabs {
   Widget get screen {
     switch (this) {
       case AppTabs.home:
-        return const MyHomePage();
+        return const Home();
       case AppTabs.tv:
         return const VideoLiveStreaming();
       case AppTabs.settings:
-        return const MyHomePage();
+        return const Home();
       default:
-        return const MyHomePage();
+        return const Home();
     }
   }
 }
