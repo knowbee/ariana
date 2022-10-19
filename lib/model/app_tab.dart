@@ -1,4 +1,5 @@
 import 'package:ariana/main.dart';
+import 'package:ariana/screens/live_streaming.dart';
 import 'package:flutter/material.dart';
 
 enum AppTabs { home, tv, settings }
@@ -9,7 +10,7 @@ extension AppLangExtension on AppTabs {
       case AppTabs.home:
         return const MyHomePage();
       case AppTabs.tv:
-        return const MyHomePage();
+        return const VideoLiveStreaming();
       case AppTabs.settings:
         return const MyHomePage();
       default:
