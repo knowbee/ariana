@@ -2,6 +2,11 @@ import 'package:ariana/repositories/news_repository.dart';
 import 'package:ariana/state/category_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+final categoryProvider =
+    StateNotifierProvider<CategoryNotifier, CategoryState>((ref) {
+  return CategoryNotifier(CategoryState.initial());
+});
+
 class CategoryNotifier extends StateNotifier<CategoryState> {
   CategoryNotifier(CategoryState state) : super(state) {
     fetchCategories();
@@ -13,8 +18,3 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
     state = state.copyWith(categories: categories, isLoading: false);
   }
 }
-
-final categoryProvider =
-    StateNotifierProvider<CategoryNotifier, CategoryState>((ref) {
-  return CategoryNotifier(CategoryState.initial());
-});

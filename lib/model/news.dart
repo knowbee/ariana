@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ariana/model/category.dart';
+
 class News {
   String id;
   String title;
@@ -8,6 +10,7 @@ class News {
   String date;
   String author;
   String content;
+  List<Category> categories;
   News({
     required this.id,
     required this.title,
@@ -16,6 +19,7 @@ class News {
     required this.date,
     required this.author,
     required this.content,
+    required this.categories,
   });
 
   News copyWith({
@@ -26,6 +30,7 @@ class News {
     String? date,
     String? author,
     String? content,
+    List<Category>? categories,
   }) {
     return News(
       id: id ?? this.id,
@@ -35,6 +40,7 @@ class News {
       date: date ?? this.date,
       author: author ?? this.author,
       content: content ?? this.content,
+      categories: categories ?? this.categories,
     );
   }
 
@@ -47,6 +53,7 @@ class News {
       'date': date,
       'author': author,
       'content': content,
+      'categories': categories.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -59,6 +66,8 @@ class News {
       date: map['date'] ?? '',
       author: map['author']?.toString() ?? '',
       content: map['content']['rendered'] ?? '',
+      categories: List<Category>.from(
+          map['mobiconnector_categories'].map((x) => Category.fromNewsMap(x))),
     );
   }
 

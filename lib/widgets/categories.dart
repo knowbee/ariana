@@ -11,7 +11,7 @@ class Categories extends HookConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, ref) {
     final categoryState = ref.watch(categoryProvider);
 
     if (categoryState.categories.isEmpty) {
@@ -21,8 +21,10 @@ class Categories extends HookConsumerWidget {
     }
     final TabController tabController =
         useTabController(initialLength: categoryState.categories.length);
+
     tabController.addListener(() {
-      ref.read(newsProvider.notifier).fetchNews();
+      final categoryId = categoryState.categories[tabController.index].id;
+      ref.read(newsProvider.notifier).fetchNews(page: 1, category: categoryId);
     });
     return Column(
       children: <Widget>[
@@ -59,9 +61,11 @@ class Categories extends HookConsumerWidget {
               36,
           child: TabBarView(
             controller: tabController,
-            children: categoryState.categories.map((category) {
-              return const NewsList();
-            }).toList(),
+            children: categoryState.categories
+                .map((category) => NewsList(
+                      categoryId: category.id,
+                    ))
+                .toList(),
           ),
         ),
       ],

@@ -1,18 +1,32 @@
+import 'package:ariana/providers/category_provider.dart';
 import 'package:ariana/repositories/news_repository.dart';
 import 'package:ariana/state/news_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final newsProvider = StateNotifierProvider<NewsNotifier, NewsState>((ref) {
-  return NewsNotifier(NewsState.initial());
+  final categoryState = ref.watch(categoryProvider);
+  final firstCategory = categoryState.categories.first;
+  return NewsNotifier(NewsState.initial(), firstCategory.id);
 });
 
 class NewsNotifier extends StateNotifier<NewsState> {
-  NewsNotifier(NewsState state) : super(state) {
-    fetchNews();
+  NewsNotifier(NewsState state, int categoryId) : super(state) {
+    fetchNews(page: 1, category: categoryId);
   }
 
-  void fetchNews() async {
-    state = state.copyWith(isLoading: true);
-    state = await NewsRepository.fetch(state.page + 1);
+  void fetchNews({required int page, required int category}) async {
+    if (state.isLoading) return;
+    state = state.copyWith(isLoading: true, page: page);
+
+    var newState = await NewsRepository.fetch(page, category);
+    // page.toInt() == 1;
+    // if (page == 1) {
+    //   print("here");
+    //   state = newState;
+    //   return;
+    // }
+
+    newState = newState.copyWith(news: [...state.news, ...newState.news]);
+    state = newState;
   }
 }

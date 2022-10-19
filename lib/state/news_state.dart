@@ -20,14 +20,17 @@ class NewsState {
     required this.count,
   });
 
+  bool get hasMore => page < totalPage;
+
   factory NewsState.initial() {
     return NewsState(
-        news: [],
-        isLoading: false,
-        isError: false,
-        page: 0,
-        totalPage: 0,
-        count: 0);
+      news: [],
+      isLoading: false,
+      isError: false,
+      page: 1,
+      totalPage: 0,
+      count: 0,
+    );
   }
 
   NewsState copyWith({
@@ -48,11 +51,13 @@ class NewsState {
     );
   }
 
-  factory NewsState.success(
-      {required List<News> news,
-      required int page,
-      required int totalPage,
-      required int count}) {
+  //success state
+  factory NewsState.success({
+    required List<News> news,
+    required int page,
+    required int totalPage,
+    required int count,
+  }) {
     return NewsState(
       news: news,
       isLoading: false,
@@ -120,11 +125,12 @@ class NewsState {
   }
 
   @override
-  int get hashCode =>
-      news.hashCode ^
-      isLoading.hashCode ^
-      isError.hashCode ^
-      page.hashCode ^
-      totalPage.hashCode ^
-      count.hashCode;
+  int get hashCode {
+    return news.hashCode ^
+        isLoading.hashCode ^
+        isError.hashCode ^
+        page.hashCode ^
+        totalPage.hashCode ^
+        count.hashCode;
+  }
 }

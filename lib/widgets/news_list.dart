@@ -1,26 +1,52 @@
 import 'package:ariana/providers/news_provider.dart';
 import 'package:ariana/widgets/news_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NewsList extends ConsumerWidget {
+class NewsList extends HookConsumerWidget {
   const NewsList({
     Key? key,
+    required this.categoryId,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final newsState = ref.watch(newsProvider);
+  final int categoryId;
 
-    if (newsState.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+  @override
+  Widget build(BuildContext context, ref) {
+    final newsState = ref.watch(newsProvider);
+    final scrollController = useScrollController();
+
+    scrollController.addListener(() {
+      bool isEndOfList =
+          scrollController.offset == scrollController.position.maxScrollExtent;
+
+      if (isEndOfList && newsState.hasMore && !newsState.isLoading) {
+        ref.read(newsProvider.notifier).fetchNews(
+              page: newsState.page + 1,
+              category: categoryId,
+            );
+      }
+    });
+
+    if (newsState.isLoading && newsState.page == 1) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
     }
+
     return ListView.builder(
-      itemExtent: 100,
-      itemCount: newsState.news.length,
+      controller: scrollController,
       padding: const EdgeInsets.all(16),
-      itemBuilder: (context, index) =>
-          NewsListItem(newsItem: newsState.news[index]),
+      itemExtent: 100,
+      itemCount:
+          newsState.hasMore ? newsState.news.length + 1 : newsState.news.length,
+      itemBuilder: (context, index) {
+        if (index >= newsState.news.length && newsState.hasMore) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return NewsListItem(newsItem: newsState.news[index]);
+      },
     );
   }
 }
