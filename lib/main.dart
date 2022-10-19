@@ -1,3 +1,4 @@
+import 'package:ariana/widgets/bottom_navigation_bar.dart';
 import 'package:ariana/widgets/breaking_news.dart';
 import 'package:ariana/widgets/categories.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: const BottomNavigationBarWidget(),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
