@@ -27,4 +27,14 @@ class NewsRepository {
       return [];
     }
   }
+
+  static Future<List<News>> fetchBreakingNews() async {
+    try {
+      var res = await Dio()
+          .get('https://ariananews.af/wp-json/wp/v2/posts?per_page=15');
+      return (res.data as List).map((e) => News.fromMap(e)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
 }

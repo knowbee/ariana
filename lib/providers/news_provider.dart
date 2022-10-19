@@ -1,7 +1,12 @@
+import 'package:ariana/model/news.dart';
 import 'package:ariana/providers/category_provider.dart';
 import 'package:ariana/repositories/news_repository.dart';
 import 'package:ariana/state/news_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final breakingNewsProvider = FutureProvider<List<News>>((ref) async {
+  return NewsRepository.fetchBreakingNews();
+});
 
 final newsProvider = StateNotifierProvider<NewsNotifier, NewsState>((ref) {
   final categoryState = ref.watch(categoryProvider);
