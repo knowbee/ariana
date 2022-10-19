@@ -19,12 +19,10 @@ class NewsNotifier extends StateNotifier<NewsState> {
     state = state.copyWith(isLoading: true, page: page);
 
     var newState = await NewsRepository.fetch(page, category);
-    // page.toInt() == 1;
-    // if (page == 1) {
-    //   print("here");
-    //   state = newState;
-    //   return;
-    // }
+    if (page == 1) {
+      state = newState;
+      return;
+    }
 
     newState = newState.copyWith(news: [...state.news, ...newState.news]);
     state = newState;
