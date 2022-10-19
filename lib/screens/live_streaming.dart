@@ -45,6 +45,7 @@ class _VideoLiveStreamingState extends ConsumerState<VideoLiveStreaming> {
                   builder: (context) => tab.screen,
                 ),
               );
+              _controller.pause();
               // go to homepage
             },
           ),
